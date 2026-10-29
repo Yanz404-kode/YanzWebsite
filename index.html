@@ -1,0 +1,836 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d18">
+  <meta name="description" content="YanzWeb - Personal website dan pusat proyek digital Yanz.">
+  <title>YanzWeb | Digital Universe</title>
+
+  <style>
+    :root {
+      --bg: #080d18;
+      --surface: #101a2b;
+      --text: #f1f5ff;
+      --muted: #9baac3;
+      --blue: #3985ff;
+      --cyan: #53d9ff;
+      --border: rgba(150, 180, 230, .15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 85px;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      transition: background .3s, color .3s;
+    }
+
+    body.light {
+      --bg: #f4f7ff;
+      --surface: #ffffff;
+      --text: #14213a;
+      --muted: #64748b;
+      --border: rgba(20, 40, 80, .14);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .container {
+      width: min(1100px, 90%);
+      margin: auto;
+    }
+
+    /* NAVBAR */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+    }
+
+    nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--cyan);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: .9rem;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--cyan);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .icon-btn {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .menu-btn {
+      display: none;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 82vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      right: -80px;
+      top: 80px;
+      background: #1767ff;
+      filter: blur(150px);
+      opacity: .22;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 75px 0;
+      max-width: 780px;
+      animation: appear .9s ease both;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 7px 13px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--cyan);
+      background: var(--surface);
+      font-size: .8rem;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 8vw, 5.8rem);
+      line-height: 1.05;
+      letter-spacing: -3px;
+      margin-bottom: 24px;
+    }
+
+    .gradient {
+      background: linear-gradient(100deg, #3985ff, #53d9ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 600px;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border-radius: 11px;
+      border: 1px solid var(--border);
+      font-weight: 700;
+      transition: transform .2s, opacity .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(110deg, #276bff, #168fd7);
+      border: none;
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+    }
+
+    /* SECTION */
+    section {
+      padding: 85px 0;
+    }
+
+    .section-heading {
+      margin-bottom: 35px;
+    }
+
+    .section-heading small {
+      color: var(--cyan);
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.2;
+      margin: 10px 0;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      max-width: 650px;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 25px;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+    }
+
+    .panel h3 {
+      margin-bottom: 12px;
+      font-size: 1.25rem;
+    }
+
+    .panel p {
+      color: var(--muted);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat {
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 18px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.35rem;
+      color: var(--cyan);
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    /* PROJECTS */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .project {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 26px;
+      transition: transform .25s, border-color .25s;
+    }
+
+    .project:hover {
+      transform: translateY(-5px);
+      border-color: var(--blue);
+    }
+
+    .project-icon {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      font-size: 1.7rem;
+      background: rgba(57, 133, 255, .13);
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+
+    .project h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+
+    .project p {
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .project a {
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: .75rem;
+      padding: 4px 9px;
+      border-radius: 6px;
+      color: var(--cyan);
+      background: rgba(83, 217, 255, .08);
+      margin-bottom: 12px;
+    }
+
+    /* VISION */
+    .vision {
+      text-align: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 45px 25px;
+    }
+
+    .vision p {
+      max-width: 650px;
+      margin: 15px auto 25px;
+      color: var(--muted);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .7s, transform .7s;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        width: 100%;
+        padding: 20px 5%;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .menu-btn {
+        display: inline-block;
+      }
+
+      .about-grid,
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: 75vh;
+      }
+
+      h1 {
+        letter-spacing: -1.5px;
+      }
+
+      section {
+        padding: 65px 0;
+      }
+
+      .panel {
+        padding: 22px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav class="container">
+      <a class="logo" href="#home">Yanz<span>Web.</span></a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#home" data-id="navHome">Beranda</a>
+        <a href="#about" data-id="navAbout">Tentang</a>
+        <a href="#projects" data-id="navProjects">Proyek</a>
+        <a href="#vision" data-id="navVision">Visi</a>
+      </div>
+
+      <div class="nav-actions">
+        <select id="language" class="icon-btn"
+          aria-label="Pilih bahasa"
+          style="width:62px;font-size:12px">
+          <option value="id">ID</option>
+          <option value="en">EN</option>
+          <option value="jv">JW</option>
+        </select>
+
+        <button class="icon-btn" id="themeBtn"
+          aria-label="Ganti tema">☀️</button>
+
+        <button class="icon-btn menu-btn" id="menuBtn"
+          aria-label="Buka navigasi">☰</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero container" id="home">
+      <div class="hero-content">
+        <span class="eyebrow" data-id="eyebrow">
+          ✦ PERSONAL WEBSITE & DIGITAL PROJECTS
+        </span>
+
+        <h1>
+          Membangun Ide,<br>
+          Menciptakan <span class="gradient">Masa Depan.</span>
+        </h1>
+
+        <p data-id="heroDesc">
+          Selamat datang di YanzWeb. Tempat gw memperkenalkan diri,
+          mengeksplorasi teknologi, dan mengembangkan berbagai proyek
+          digital dari ide sederhana menjadi sesuatu yang nyata.
+        </p>
+
+        <div class="buttons">
+          <a href="#projects" class="btn btn-primary"
+            data-id="exploreBtn">Jelajahi Proyek ↗</a>
+          <a href="#about" class="btn btn-secondary"
+            data-id="aboutBtn">Kenal Gw</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-heading reveal">
+          <small data-id="aboutSmall">Tentang Gw</small>
+          <h2 data-id="aboutTitle">Kenalan dengan Yanz.</h2>
+          <p data-id="aboutIntro">
+            Seorang pelajar yang tertarik pada teknologi, pemrograman,
+            sains, dan ide-ide kreatif.
+          </p>
+        </div>
+
+        <div class="about-grid reveal">
+          <div class="panel">
+            <h3 data-id="aboutCardTitle">Bukan Sekadar Pengguna Teknologi</h3>
+            <p data-id="aboutCardDesc">
+              Gw ingin belajar bagaimana teknologi bekerja dan
+              menggunakannya untuk membangun sesuatu yang bermanfaat.
+              YanzWeb menjadi pusat informasi tentang perjalanan belajar
+              dan proyek-proyek yang sedang gw kembangkan.
+            </p>
+          </div>
+
+          <div class="panel">
+            <div class="stats">
+              <div class="stat">
+                <strong>01</strong>
+                <span data-id="statOne">Terus Belajar</span>
+              </div>
+              <div class="stat">
+                <strong>02</strong>
+                <span data-id="statTwo">Berani Mencoba</span>
+              </div>
+              <div class="stat">
+                <strong>03</strong>
+                <span data-id="statThree">Berpikir Kreatif</span>
+              </div>
+              <div class="stat">
+                <strong>∞</strong>
+                <span data-id="statFour">Ide Tanpa Batas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-heading reveal">
+          <small data-id="projectsSmall">Karya Digital</small>
+          <h2 data-id="projectsTitle">Proyek yang Gw Bangun.</h2>
+          <p data-id="projectsIntro">
+            Beberapa ide yang ingin gw kembangkan menjadi proyek nyata.
+          </p>
+        </div>
+
+        <div class="project-grid">
+
+          <article class="project reveal">
+            <div class="project-icon">🌌</div>
+            <span class="tag">SCIENCE · 3D</span>
+            <h3>Kosmo</h3>
+            <p data-id="kosmoDesc">
+              Eksplorasi antariksa dengan ensiklopedia kosmik,
+              planet 3D, galaksi, dan simulasi tata surya.
+            </p>
+            <a href="#contact" data-id="projectLink">
+              Segera Hadir ↗
+            </a>
+          </article>
+
+          <article class="project reveal">
+            <div class="project-icon">📚</div>
+            <span class="tag">EDUCATION</span>
+            <h3>Ilmora</h3>
+            <p data-id="ilmoraDesc">
+              Ruang belajar digital untuk menjelajahi materi
+              IPA, IPS, Matematika, dan berbagai ilmu pengetahuan.
+            </p>
+            <a href="#contact" data-id="projectLink">
+              Segera Hadir ↗
+            </a>
+          </article>
+
+          <article class="project reveal">
+            <div class="project-icon">💻</div>
+            <span class="tag">WEB DEVELOPMENT</span>
+            <h3>Web Lab</h3>
+            <p data-id="labDesc">
+              Eksperimen HTML, CSS, dan JavaScript untuk
+              menciptakan website dan aplikasi yang menarik.
+            </p>
+            <a href="#contact" data-id="projectLink">
+              Segera Hadir ↗
+            </a>
+          </article>
+
+          <article class="project reveal">
+            <div class="project-icon">🚀</div>
+            <span class="tag">FUTURE PROJECT</span>
+            <h3>Project X</h3>
+            <p data-id="futureDesc">
+              Ruang untuk ide-ide baru yang belum diumumkan.
+              Siapa tahu proyek berikutnya justru yang paling menarik.
+            </p>
+            <a href="#vision" data-id="visionLink">
+              Lihat Visi ↗
+            </a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="vision">
+      <div class="container">
+        <div class="vision reveal">
+          <span class="eyebrow">THE VISION</span>
+          <h2 data-id="visionTitle">
+            Ide Kecil. <span class="gradient">Dampak Besar.</span>
+          </h2>
+          <p data-id="visionDesc">
+            YanzWeb bukan cuma halaman perkenalan. Ini adalah titik
+            awal perjalanan untuk belajar, membangun, bereksperimen,
+            dan mewujudkan berbagai ide digital.
+          </p>
+          <a href="#home" class="btn btn-primary"
+            data-id="backTop">Kembali ke Atas ↑</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" style="padding-top:0">
+      <div class="container">
+        <div class="panel reveal">
+          <h3 data-id="contactTitle">Hubungi & Temukan Gw</h3>
+          <p data-id="contactDesc">
+            Temukan proyek dan pembaruan YanzWeb melalui tautan
+            yang nantinya akan ditambahkan di sini.
+          </p>
+          <p style="margin-top:12px">
+            <a href="https://github.com/" target="_blank"
+              rel="noopener noreferrer"
+              style="color:var(--cyan);font-weight:bold">
+              GitHub ↗
+            </a>
+          </p>
+          <p style="font-size:.8rem;margin-top:8px">
+            Ganti tautan GitHub di atas dengan profil lu sendiri.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> YanzWeb.</span>
+      <span data-id="footerText">Dibangun dengan ide dan rasa ingin tahu. ✦</span>
+    </div>
+  </footer>
+
+  <script>
+    const $ = (selector) => document.querySelector(selector);
+
+    // MOBILE NAVIGATION
+    $("#menuBtn").addEventListener("click", () => {
+      $("#navLinks").classList.toggle("open");
+    });
+
+    document.querySelectorAll("#navLinks a").forEach(link => {
+      link.addEventListener("click", () => {
+        $("#navLinks").classList.remove("open");
+      });
+    });
+
+    // DARK / LIGHT MODE
+    $("#themeBtn").addEventListener("click", () => {
+      document.body.classList.toggle("light");
+      $("#themeBtn").textContent =
+        document.body.classList.contains("light") ? "🌙" : "☀️";
+    });
+
+    // LANGUAGE SWITCHER
+    const translations = {
+      id: {
+        navHome: "Beranda",
+        navAbout: "Tentang",
+        navProjects: "Proyek",
+        navVision: "Visi",
+        eyebrow: "✦ WEBSITE PRIBADI & PROYEK DIGITAL",
+        heroDesc: "Selamat datang di YanzWeb. Tempat gw memperkenalkan diri, mengeksplorasi teknologi, dan mengembangkan berbagai proyek digital dari ide sederhana menjadi sesuatu yang nyata.",
+        exploreBtn: "Jelajahi Proyek ↗",
+        aboutBtn: "Kenal Gw",
+        aboutSmall: "Tentang Gw",
+        aboutTitle: "Kenalan dengan Yanz.",
+        aboutIntro: "Seorang pelajar yang tertarik pada teknologi, pemrograman, sains, dan ide-ide kreatif.",
+        aboutCardTitle: "Bukan Sekadar Pengguna Teknologi",
+        aboutCardDesc: "Gw ingin belajar bagaimana teknologi bekerja dan menggunakannya untuk membangun sesuatu yang bermanfaat. YanzWeb menjadi pusat informasi tentang perjalanan belajar dan proyek-proyek yang sedang gw kembangkan.",
+        statOne: "Terus Belajar",
+        statTwo: "Berani Mencoba",
+        statThree: "Berpikir Kreatif",
+        statFour: "Ide Tanpa Batas",
+        projectsSmall: "Karya Digital",
+        projectsTitle: "Proyek yang Gw Bangun.",
+        projectsIntro: "Beberapa ide yang ingin gw kembangkan menjadi proyek nyata.",
+        kosmoDesc: "Eksplorasi antariksa dengan ensiklopedia kosmik, planet 3D, galaksi, dan simulasi tata surya.",
+        ilmoraDesc: "Ruang belajar digital untuk menjelajahi materi IPA, IPS, Matematika, dan berbagai ilmu pengetahuan.",
+        labDesc: "Eksperimen HTML, CSS, dan JavaScript untuk menciptakan website dan aplikasi yang menarik.",
+        futureDesc: "Ruang untuk ide-ide baru yang belum diumumkan. Siapa tahu proyek berikutnya justru yang paling menarik.",
+        projectLink: "Segera Hadir ↗",
+        visionLink: "Lihat Visi ↗",
+        visionTitle: "Ide Kecil. Dampak Besar.",
+        visionDesc: "YanzWeb bukan cuma halaman perkenalan. Ini adalah titik awal perjalanan untuk belajar, membangun, bereksperimen, dan mewujudkan berbagai ide digital.",
+        backTop: "Kembali ke Atas ↑",
+        contactTitle: "Hubungi & Temukan Gw",
+        contactDesc: "Temukan proyek dan pembaruan YanzWeb melalui tautan yang nantinya akan ditambahkan di sini.",
+        footerText: "Dibangun dengan ide dan rasa ingin tahu. ✦"
+      },
+      en: {
+        navHome: "Home",
+        navAbout: "About",
+        navProjects: "Projects",
+        navVision: "Vision",
+        eyebrow: "✦ PERSONAL WEBSITE & DIGITAL PROJECTS",
+        heroDesc: "Welcome to YanzWeb. A place to introduce myself, explore technology, and turn simple ideas into real digital projects.",
+        exploreBtn: "Explore Projects ↗",
+        aboutBtn: "About Me",
+        aboutSmall: "About Me",
+        aboutTitle: "Meet Yanz.",
+        aboutIntro: "A student interested in technology, programming, science, and creative ideas.",
+        aboutCardTitle: "More Than a Technology User",
+        aboutCardDesc: "I want to understand how technology works and use it to build useful things. YanzWeb documents my learning journey and the projects I develop.",
+        statOne: "Keep Learning",
+        statTwo: "Keep Trying",
+        statThree: "Think Creatively",
+        statFour: "Endless Ideas",
+        projectsSmall: "Digital Works",
+        projectsTitle: "Projects I'm Building.",
+        projectsIntro: "Ideas I hope to turn into real projects.",
+        
+        ilmoraDesc: "A digital learning space for science, social studies, mathematics, and more.",
+        labDesc: "HTML, CSS, and JavaScript experiments for creating websites and applications.",
+        futureDesc: "A home for new ideas yet to be announced. The next project might be the most exciting one.",
+        projectLink: "Coming Soon ↗",
+        visionLink: "Our Vision ↗",
+        visionTitle: "Small Ideas. Big Impact.",
+        visionDesc: "YanzWeb is more than an introduction. It's the starting point for learning, building, experimenting, and bringing digital ideas to life.",
+        backTop: "Back to Top ↑",
+        contactTitle: "Connect With Me",
+        contactDesc: "Find projects and YanzWeb updates through links that will be added here.",
+        footerText: "Built with ideas and curiosity. ✦"
+      },
+      jv: {
+        navHome: "Ngarep",
+        navAbout: "Babagan",
+        navProjects: "Proyek",
+        navVision: "Visi",
+        eyebrow: "✦ SITUS PRIBADI LAN PROYEK DIGITAL",
+        heroDesc: "Sugeng rawuh ing YanzWeb. Papan kanggo ngenalake awak, nyinaoni teknologi, lan ngembangake gagasan digital dadi karya nyata.",
+        exploreBtn: "Jelajahi Proyek ↗",
+        aboutBtn: "Kenalan",
+        aboutSmall: "Babagan Aku",
+        aboutTitle: "Ayo Kenalan karo Yanz.",
+        aboutIntro: "Siswa sing seneng teknologi, pemrograman, ilmu pengetahuan, lan gagasan kreatif.",
+        aboutCardTitle: "Ora Mung Nggunakake Teknologi",
+        aboutCardDesc: "Aku kepengin sinau cara kerjane teknologi lan nggunakake kanggo nggawe karya sing migunani. YanzWeb dadi papan kanggo nyathet proses sinau lan proyek sing dakbangun.",
+        statOne: "Terus Sinau",
+        statTwo: "Wani Nyoba",
+        statThree: "Pikiran Kreatif",
+        statFour: "Gagasan Tanpa Wates",
+        projectsSmall: "Karya Digital",
+        projectsTitle: "Proyek sing Dakbangun.",
+        projectsIntro: "Sawetara gagasan sing arep dakwujudake dadi proyek nyata.",
+        kosmoDesc: "Jelajahi antariksa liwat ensiklopedia kosmik, planet 3D, galaksi, lan simulasi tata surya.",
+        ilmoraDesc: "Papan sinau digital kanggo IPA, IPS, Matematika, lan kawruh liyane.",
+        labDesc: "Eksperimen HTML, CSS, lan JavaScript kanggo nggawe situs web lan aplikasi.",
+        futureDesc: "Papan kanggo gagasan anyar sing durung diumumake. Sapa ngerti proyek sabanjure luwih nyenengake.",
+        projectLink: "Enggal Teka ↗",
+        visionLink: "Deleng Visi ↗",
+        visionTitle: "Gagasan Cilik. Dampak Gedhe.",
+        visionDesc: "YanzWeb ora mung kaca perkenalan. Iki wiwitan kanggo sinau, mbangun, nyoba, lan mujudake gagasan digital.",
+        backTop: "Menyang Ndhuwur ↑",
+        contactTitle: "Golek Aku",
+        contactDesc: "Delengen proyek lan kabar YanzWeb liwat pranala sing bakal ditambahake.",
+        footerText: "Dibangun nganggo gagasan lan rasa kepengin weruh. ✦"
+      }
+    };
+
+    $("#language").addEventListener("change", event => {
+      const lang = event.target.value;
+      const dictionary = translations[lang];
+
+      document.documentElement.lang = lang === "jv" ? "jv" : lang;
+
+      document.querySelectorAll("[data-id]").forEach(element => {
+        const key = element.dataset.id;
+        if (dictionary[key]) {
+          element.textContent = dictionary[key];
+        }
+      });
+    });
+
+    // SCROLL REVEAL
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach(element => {
+      observer.observe(element);
+    });
+
+    // AUTOMATIC COPYRIGHT YEAR
+    $("#year").textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
